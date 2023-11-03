@@ -23,13 +23,6 @@ import javax.swing.JOptionPane;
 
 public class Vender extends JDialog implements ActionListener {
 
-	
-	
-	double DatoCompra = 0, DatoDescuento = 0, DatoSeleccionado = 0, DatoPagar = 0, DatoCuotaDiaria = 0;
-	double DatoCantidad = 0, DatoObsequios = 0;
-	double GeneralAcumulado = 0, PorcentajeDiario = 0;
-	int VentasRealizadas = 0;
-	
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblModelo;
 	private JLabel lblPrecio;
@@ -59,59 +52,61 @@ public class Vender extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Vender() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 370);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		lblModelo = new JLabel("Modelo");
 		lblModelo.setBounds(21, 23, 46, 14);
 		contentPanel.add(lblModelo);
-		
+
 		lblPrecio = new JLabel("Precio (S/)");
 		lblPrecio.setBounds(21, 56, 69, 14);
 		contentPanel.add(lblPrecio);
-		
+
 		lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setBounds(21, 89, 69, 14);
 		contentPanel.add(lblCantidad);
-		
+
 		textFPrecio = new JTextField();
 		textFPrecio.setEditable(false);
 		textFPrecio.setBounds(100, 53, 176, 20);
 		contentPanel.add(textFPrecio);
 		textFPrecio.setColumns(10);
-		
+
 		cboModelo = new JComboBox();
 		cboModelo.addActionListener(this);
-		cboModelo.setModel(new DefaultComboBoxModel(new String[] {"Cinza Plus", "Luxury", "Austria", "Yungay Mix", "Thal\u00EDa"}));
+		cboModelo.setModel(new DefaultComboBoxModel(
+				new String[] { "Cinza Plus", "Luxury", "Austria", "Yungay Mix", "Thal\u00EDa" }));
 		cboModelo.setBounds(100, 19, 176, 22);
 		contentPanel.add(cboModelo);
-		
+
 		textFCantidad = new JTextField();
 		textFCantidad.setBounds(100, 86, 176, 20);
 		contentPanel.add(textFCantidad);
 		textFCantidad.setColumns(10);
-		
+
 		btnVender = new JButton("Vender");
 		btnVender.addActionListener(this);
 		btnVender.setBounds(323, 19, 89, 23);
 		contentPanel.add(btnVender);
-		
+
 		btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(323, 52, 89, 23);
 		contentPanel.add(btnCerrar);
-		
+
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 114, 403, 136);
+		scrollPane.setBounds(10, 114, 414, 206);
 		contentPanel.add(scrollPane);
-		
+
 		textA = new JTextArea();
 		scrollPane.setViewportView(textA);
-		
+
 		textFPrecio.setText(MenuCerámico.precio0 + "");
 	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == cboModelo) {
 			actionPerformedCboModelo(e);
@@ -122,210 +117,173 @@ public class Vender extends JDialog implements ActionListener {
 	}
 
 	protected void actionPerformedCboModelo(ActionEvent e) {
-		switch(cboModelo.getSelectedIndex()) {
-			case 0:
-				textFPrecio.setText(MenuCerámico.precio0+"");
-				break;
-			case 1:
-				textFPrecio.setText(MenuCerámico.precio1+"");
-				break;
-			case 2:
-				textFPrecio.setText(MenuCerámico.precio2+"");
-				break;
-			case 3:
-				textFPrecio.setText(MenuCerámico.precio3+"");
-				break;
-			default: 
-				textFPrecio.setText(MenuCerámico.precio4+"");
-				break;
+		switch (cboModelo.getSelectedIndex()) {
+		case 0:
+			textFPrecio.setText(MenuCerámico.precio0 + "");
+			precioProducto = MenuCerámico.precio0;
+			break;
+		case 1:
+			textFPrecio.setText(MenuCerámico.precio1 + "");
+			precioProducto = MenuCerámico.precio1;
+			break;
+		case 2:
+			textFPrecio.setText(MenuCerámico.precio2 + "");
+			precioProducto = MenuCerámico.precio2;
+			break;
+		case 3:
+			textFPrecio.setText(MenuCerámico.precio3 + "");
+			precioProducto = MenuCerámico.precio3;
+			break;
+		default:
+			textFPrecio.setText(MenuCerámico.precio4 + "");
+			precioProducto = MenuCerámico.precio4;
+			break;
 		}
 	}
+
+//Variables
+	double precioProducto, impCompra, impDescuento, impPagar, CuotaDiaria, dineroAcumulado,
+			PorcentajeDiario;
+	int cantidad, obsequio;
+	int ventasRealizadas = 0;
 	
-	
-	//Función! : ) need call! Nestor YES! Backend!
-	public double isVender(String Varible, double PrecioA, double PorcentajeA, double PorcentajeB, double PorcentajeC, double PorcentajeD) {
-		
-		DatoCompra = PrecioA * DatoCantidad;
-		if (DatoCantidad <= 5) {
-			DatoDescuento = (PorcentajeA * DatoCompra) / 100;
-			DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad1;
-		}
-		else if(DatoCantidad <= 10) {
-			DatoDescuento = (PorcentajeB * DatoCompra) / 100;
-			DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad2;
-			}
-		else if(DatoCantidad <= 15) {
-			DatoDescuento = (PorcentajeC * DatoCompra) / 100;
-			DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad3;
-			}
-		else {
-			DatoDescuento = (PorcentajeD * DatoCompra) / 100;
-			DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad3;
-		}
-			DatoPagar = DatoCompra - DatoDescuento;
-			
-			if(Varible == "DatoSeleccionado")
-				return DatoSeleccionado;
-			else if(Varible == "DatoCompra")
-				return DatoCompra;
-			else if(Varible == "DatoDescuento")
-				return DatoDescuento;
-			else if(Varible == "DatoPagar")
-				return DatoPagar;
-			else if(Varible == "DatoObsequios")
-				return DatoObsequios;
-			else
-				return 0;
-				
+	void leerCantidad() {
+		cantidad = Integer.parseInt(textFCantidad.getText());
 	}
-	
+	void calcularImpCompra(double precioPro, int cantidad) {
+		impCompra = precioPro * cantidad;
+	}
+	void calcularImporteDescuento() {
+		if (cantidad <= 5) {
+			impDescuento = (MenuCerámico.porcentaje1 * impCompra) / 100;
+		} else if (cantidad <= 10) {
+			impDescuento = (MenuCerámico.porcentaje2 * impCompra) / 100;
+		} else if (cantidad <= 15) {
+			impDescuento = (MenuCerámico.porcentaje3 * impCompra) / 100;
+		} else {
+			impDescuento = (MenuCerámico.porcentaje4 * impCompra) / 100;
+		}
+	}
+	void calcularImportePagar() {
+		impPagar = impCompra - impDescuento;
+	}
+	void calcularObs(int cantidad) {
+		if (cantidad <= 5) {
+			obsequio = (MenuCerámico.obsequioCantidad1 * cantidad);
+		} else if (cantidad <= 10) {
+			obsequio = (MenuCerámico.obsequioCantidad2 * cantidad);
+		} else {
+			obsequio = (MenuCerámico.obsequioCantidad3 * cantidad);
+		}
+	}
+	void imprimirDatos(double precio, int cantidad, double importeCompra, double importeDescuento, double importePagar,
+			String tipoObsequio, int cantidadObsequio) {
+		textA.setText("BOLETA DE VENTA" + "\n\n");
+		textA.append("Modelo\t\t: " + cboModelo.getSelectedItem());
+		textA.append("\nPrecio\t\t: S/." + precio);
+		textA.append("\nCantidad adquirida\t: " + cantidad);
+		textA.append("\nImporte de Compra\t: S/." + String.format("%.2f", importeCompra));
+		textA.append("\nImporte de Descuento\t: S/." + String.format("%.2f", importeDescuento));
+		textA.append("\nImporte a Pagar\t: S/" + String.format("%.2f", importePagar));
+		textA.append("\nTipo de Obsequio\t: " + tipoObsequio);
+		textA.append("\nUnidades Obsequiadas\t: " + cantidadObsequio);
+	}
+	void guardarDatosVentaModelo(int cajasVendidas, int cantidadVentas, double importeTotalVentas,
+			double cuotaDiariaModelo) {
+		cajasVendidas += Integer.parseInt(textFCantidad.getText());
+		cantidadVentas++;
+		importeTotalVentas += impPagar;
+		cuotaDiariaModelo = (importeTotalVentas / MenuCerámico.cuotaDiaria) * 100;
+	};
+	void guardarVentasModelos() {
+
+		switch (cboModelo.getSelectedIndex()) {
+		case 0:
+			guardarDatosVentaModelo(MenuCerámico.CajasVendidos0, MenuCerámico.CantidadVentas0,
+					MenuCerámico.TotalImporteVendido0, MenuCerámico.SaveCuotaDiaria0);
+			break;
+		case 1:
+			guardarDatosVentaModelo(MenuCerámico.CajasVendidos1, MenuCerámico.CantidadVentas1,
+					MenuCerámico.TotalImporteVendido1, MenuCerámico.SaveCuotaDiaria1);
+			break;
+		case 2:
+			guardarDatosVentaModelo(MenuCerámico.CajasVendidos2, MenuCerámico.CantidadVentas2,
+					MenuCerámico.TotalImporteVendido2, MenuCerámico.SaveCuotaDiaria2);
+			break;
+		case 3:
+			guardarDatosVentaModelo(MenuCerámico.CajasVendidos3, MenuCerámico.CantidadVentas3,
+					MenuCerámico.TotalImporteVendido3, MenuCerámico.SaveCuotaDiaria3);
+			break;
+		default:
+			guardarDatosVentaModelo(MenuCerámico.CajasVendidos4, MenuCerámico.CantidadVentas4,
+					MenuCerámico.TotalImporteVendido4, MenuCerámico.SaveCuotaDiaria4);
+			break;
+
+		}
+	}
+	void aumentarVentasRealizada() {
+		ventasRealizadas++;
+	}
+	void aumentarDineroAcumulado() {
+		dineroAcumulado += impPagar;
+	}
+	void calcularPorcentajeCuotaDiaria() {
+		PorcentajeDiario = (dineroAcumulado * 100) / MenuCerámico.cuotaDiaria;
+	}
+	void notificarVentas5() {
+		if (ventasRealizadas % 5 == 0) {
+			JOptionPane.showMessageDialog(null,
+							"Venta Nro. " 
+							+ ventasRealizadas + "\nImporte total general acumulado: S/. "
+							+ String.format("%.2f", dineroAcumulado) + "\nPorcentaje de la cuota diaria: "
+							+ String.format("%.2f", PorcentajeDiario) + "%",
+							"Avance de Ventas", JOptionPane.WARNING_MESSAGE);
+		}
+
+	}
+// ==========================================================================
+
 	protected void actionPerformedBtnVender(ActionEvent e) {
+		
+		//Ejecuta
+		actionPerformedCboModelo(null);
+
+		//------------------------------------------- Este if esta pendiente xd
 		if (!IsValidNum(textFCantidad.getText())) {
 			textA.setText("Debes introducir un número");
 			return;
 		}
-		DatoCantidad = Integer.parseInt(textFCantidad.getText());
-		
-		if(DatoCantidad < 1) {
+		leerCantidad();
+		if (cantidad < 1) {
 			textA.setText("Debe introducir un número mayor a 0");
 			return;
 		}
-		switch(cboModelo.getSelectedIndex()) {
-			case 0:
-				DatoSeleccionado = MenuCerámico.precio0;
-				DatoCompra = MenuCerámico.precio0 * DatoCantidad;
-				if (DatoCantidad <= 5) {
-					DatoDescuento = (MenuCerámico.porcentaje1 * DatoCompra) / 100;
-					DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad1;
-				}
-				else if(DatoCantidad <= 10) {
-					DatoDescuento = (MenuCerámico.porcentaje2 * DatoCompra) / 100;
-					DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad2;
-					}
-				else if(DatoCantidad <= 15) {
-					DatoDescuento = (MenuCerámico.porcentaje3 * DatoCompra) / 100;
-					DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad2;
-					}
-				else {
-					DatoDescuento = (MenuCerámico.porcentaje4 * DatoCompra) / 100;
-					DatoObsequios = DatoCantidad * MenuCerámico.obsequioCantidad3;
-				}
-					DatoPagar = DatoCompra - DatoDescuento;
-				break;
-			case 1:
-				DatoSeleccionado = MenuCerámico.precio1;
-				isVender("",MenuCerámico.precio1, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoCompra = isVender("DatoCompra",MenuCerámico.precio1, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoDescuento = isVender("DatoDescuento",MenuCerámico.precio1, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoPagar = isVender("DatoPagar",MenuCerámico.precio1, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoObsequios = isVender("DatoObsequios",MenuCerámico.precio1, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);				
-				break;
-			case 2:
-				DatoSeleccionado = MenuCerámico.precio2;
-				isVender("",MenuCerámico.precio2, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoCompra = isVender("DatoCompra",MenuCerámico.precio2, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoDescuento = isVender("DatoDescuento",MenuCerámico.precio2, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoPagar = isVender("DatoPagar",MenuCerámico.precio2, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoObsequios = isVender("DatoObsequios",MenuCerámico.precio2, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				break;
-			case 3:
-				DatoSeleccionado = MenuCerámico.precio3;
-				isVender("",MenuCerámico.precio3, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoCompra = isVender("DatoCompra",MenuCerámico.precio3, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoDescuento = isVender("DatoDescuento",MenuCerámico.precio3, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoPagar = isVender("DatoPagar",MenuCerámico.precio3, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoObsequios = isVender("DatoObsequios",MenuCerámico.precio3, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				break;
-			case 4:
-				DatoSeleccionado = MenuCerámico.precio4;
-				isVender("",MenuCerámico.precio4, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoCompra = isVender("DatoCompra",MenuCerámico.precio4, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoDescuento = isVender("DatoDescuento",MenuCerámico.precio4, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoPagar = isVender("DatoPagar",MenuCerámico.precio4, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-				DatoObsequios = isVender("DatoObsequios",MenuCerámico.precio4, MenuCerámico.porcentaje1,MenuCerámico.porcentaje2,MenuCerámico.porcentaje3,MenuCerámico.porcentaje4);
-
-				break;
-		}	
+		//----------------------------------------
 		
-			textA.setText("BOLETA DE VENTA" + "\n\n");
-			textA.append("Modelo\t\t: " + cboModelo.getSelectedItem());
-			textA.append("\nPrecio\t\t: S/." + DatoSeleccionado);
-			textA.append("\nCantidad adquirida\t: " + textFCantidad.getText());
-			textA.append("\nImporte de Compra\t: S/." + String.format("%.2f",DatoCompra));
-			textA.append("\nImporte de Descuento\t: S/." + String.format("%.2f",DatoDescuento));
-			textA.append("\nImporte a Pagar\t: S/" + String.format("%.2f",DatoPagar));
-			textA.append("\nTipo de Obsequio\t: " + MenuCerámico.tipoObsequio );
-			textA.append("\nUnidades Obsequiadas\t: " + (int)DatoObsequios );
-			
-			// Guardando datos para GenerarReportes
-			switch(cboModelo.getSelectedIndex()) {
-				case 0:
-					MenuCerámico.CajasVendidos0 += Integer.parseInt(textFCantidad.getText());
-					MenuCerámico.CantidadVentas0++;
-					MenuCerámico.TotalImporteVendido0 += DatoPagar;
-					MenuCerámico.SaveCuotaDiaria0 = (MenuCerámico.TotalImporteVendido0 / MenuCerámico.cuotaDiaria)*100;
-					break;
-				case 1:
-					MenuCerámico.CajasVendidos1 += Integer.parseInt(textFCantidad.getText());
-					MenuCerámico.CantidadVentas1++;
-					MenuCerámico.TotalImporteVendido1 += DatoPagar;
-					MenuCerámico.SaveCuotaDiaria1 = (MenuCerámico.TotalImporteVendido1 / MenuCerámico.cuotaDiaria)*100;
-					break;
-				case 2:
-					MenuCerámico.CajasVendidos2 += Integer.parseInt(textFCantidad.getText());
-					MenuCerámico.CantidadVentas2++;
-					MenuCerámico.TotalImporteVendido2 += DatoPagar;
-					MenuCerámico.SaveCuotaDiaria2 = (MenuCerámico.TotalImporteVendido2 / MenuCerámico.cuotaDiaria)*100;
-					break;
-				case 3:
-					MenuCerámico.CajasVendidos3 += Integer.parseInt(textFCantidad.getText());
-					MenuCerámico.CantidadVentas3++;
-					MenuCerámico.TotalImporteVendido3 += DatoPagar;
-					MenuCerámico.SaveCuotaDiaria3 = (MenuCerámico.TotalImporteVendido3 / MenuCerámico.cuotaDiaria)*100;
-					break;
-				default:
-					MenuCerámico.CajasVendidos4 += Integer.parseInt(textFCantidad.getText());
-					MenuCerámico.CantidadVentas4++;
-					MenuCerámico.TotalImporteVendido4 += DatoPagar;
-					MenuCerámico.SaveCuotaDiaria4 = (MenuCerámico.TotalImporteVendido4 / MenuCerámico.cuotaDiaria)*100;
-					break;
-			
-			}
-			
-			VentasRealizadas++; // suma cada vez que recorre
-			
-			GeneralAcumulado += DatoPagar; // Guarda el Dato en GeneralAcumulado
-			
-			//			Acumula por cada vez que se le da al botón vender / y saca el valor del menuCerámico Principal para dividir y luego multiplicar por 100
-			PorcentajeDiario = (GeneralAcumulado / MenuCerámico.cuotaDiaria) * 100;
-			
-			
-			// VentasRealizadas es multiplo de 5,10,15,20,25..? sí es cierto el resultado sería 0.
-			if (VentasRealizadas % 5 == 0) {
-		        JOptionPane.showMessageDialog(null, "Venta Nro. " + VentasRealizadas +
-		        		"\nImporte total general acumulado: S/. " +
-		        		String.format("%.2f", GeneralAcumulado)   +
-		        		"\nPorcentaje de la cuota diaria: "       +
-		        		String.format("%.2f", PorcentajeDiario) + "%",
-		        		"Avance de Ventas",
-		        		JOptionPane.WARNING_MESSAGE);
-		      }
-			
-			cboModelo.setSelectedIndex(0); // reseeleccionamos al primero del cbo
-			textFCantidad.setText("");  // Formateamos la entrada
+		calcularImpCompra(precioProducto, cantidad);
+		calcularImporteDescuento();
+		calcularImportePagar();
+		calcularObs(cantidad);
+		imprimirDatos(precioProducto, cantidad, impCompra, impDescuento, impPagar, MenuCerámico.tipoObsequio, obsequio);
+		guardarVentasModelos();
+		aumentarVentasRealizada();
+		aumentarDineroAcumulado();
+		calcularPorcentajeCuotaDiaria();
+		notificarVentas5();
+		
+		cboModelo.setSelectedIndex(0); // reseeleccionamos al primero del cbo
+		textFCantidad.setText(""); // Formateamos la entrada
 	}
-	
 
-	
 	public boolean IsValidNum(String text) {
 		// intenta realizar la funcionalidad del código dentro de Try
-        try {
-            Integer.parseInt(text);
-            return true;
-        } 
-        // En caso que suceda algún tipo de error, devolverá false.
-        catch (NumberFormatException e) {
-            return false;
-        }
-}
+		try {
+			Integer.parseInt(text);
+			return true;
+		}
+		// En caso que suceda algún tipo de error, devolverá false.
+		catch (NumberFormatException e) {
+			return false;
+		}
+	}
 }

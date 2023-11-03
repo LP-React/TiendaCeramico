@@ -2,6 +2,7 @@ package cibertec;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Menu;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -40,7 +41,7 @@ public class ListarCerámico extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public ListarCerámico() {
-		setBounds(100, 100, 450, 336);
+		setBounds(100, 100, 450, 360);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -55,12 +56,12 @@ public class ListarCerámico extends JDialog implements ActionListener {
 		
 		btnListar = new JButton("Listar");
 		btnListar.addActionListener(this);
-		btnListar.setBounds(135, 274, 89, 23);
+		btnListar.setBounds(220, 282, 89, 23);
 		contentPanel.add(btnListar);
 		
 		btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(this);
-		btnCerrar.setBounds(234, 274, 89, 23);
+		btnCerrar.setBounds(125, 282, 89, 23);
 		contentPanel.add(btnCerrar);
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -71,43 +72,27 @@ public class ListarCerámico extends JDialog implements ActionListener {
 			actionPerformedBtnNewButton(e);
 		}
 	}
+	
+	//Modulamiento xd
+	
+	void imprimir(String modelo, double precio, double ancho, double largo, double espesor, int contenido){
+		textS.append("\n");
+		textS.append("Modelo \t:  " + modelo + "\n");
+        textS.append("Precio \t:  S/  " + precio + "\n");
+        textS.append("Ancho(cm)\t:  " + ancho + " cm\n");
+        textS.append("Largo(cm)\t:  " + largo + " cm\n");
+        textS.append("Espesor(cm) \t:  " + espesor + " cm\n");
+        textS.append("Contenido \t:  " + contenido + " unidades\n");
+	}
+	
+	
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
 		textS.setText("LISTADO DE CERÁMICOS" + "\n");
-        textS.append("\n");
-        textS.append("Modelo \t: " + MenuCerámico.modelo0 + "\n");
-        textS.append("Precio \t: " + MenuCerámico.precio0 + "\n");
-        textS.append("Ancho(cm)\t: " + MenuCerámico.ancho0 + "\n");
-        textS.append("Largo(cm)\t: " + MenuCerámico.largo0 + "\n");
-        textS.append("Espesor(cm) \t: " + MenuCerámico.espesor0 + "\n");
-        textS.append("Contenido \t: " + MenuCerámico.contenido0 + "\n");
-        textS.append("\n");
-        textS.append("Modelo \t: " + MenuCerámico.modelo1 + "\n");
-        textS.append("Precio \t: " + MenuCerámico.precio1 + "\n");
-        textS.append("Ancho(cm)\t: " + MenuCerámico.ancho1 + "\n");
-        textS.append("Largo(cm)\t: " + MenuCerámico.largo1 + "\n");
-        textS.append("Espesor(cm) \t: " + MenuCerámico.espesor1 + "\n");
-        textS.append("Contenido \t: " + MenuCerámico.contenido1 + "\n");
-        textS.append("\n");
-        textS.append("Modelo \t: " + MenuCerámico.modelo2 + "\n");
-        textS.append("Precio \t: " + MenuCerámico.precio2 + "\n");
-        textS.append("Ancho(cm)\t: " + MenuCerámico.ancho2 + "\n");
-        textS.append("Largo(cm)\t: " + MenuCerámico.largo2 + "\n");
-        textS.append("Espesor(cm) \t: " + MenuCerámico.espesor2 + "\n");
-        textS.append("Contenido \t: " + MenuCerámico.contenido2 + "\n");
-        textS.append("\n");
-        textS.append("Modelo \t: " + MenuCerámico.modelo3 + "\n");
-        textS.append("Precio \t: " + MenuCerámico.precio3 + "\n");
-        textS.append("Ancho(cm)\t: " + MenuCerámico.ancho3 + "\n");
-        textS.append("Largo(cm)\t: " + MenuCerámico.largo3 + "\n");
-        textS.append("Espesor(cm) \t: " + MenuCerámico.espesor3 + "\n");
-        textS.append("Contenido \t: " + MenuCerámico.contenido3 + "\n");
-        textS.append("\n");
-        textS.append("Modelo \t: " + MenuCerámico.modelo4 + "\n");
-        textS.append("Precio \t: " + MenuCerámico.precio4 + "\n");
-        textS.append("Ancho(cm)\t: " + MenuCerámico.ancho4 + "\n");
-        textS.append("Largo(cm)\t: " + MenuCerámico.largo4 + "\n");
-        textS.append("Espesor(cm) \t: " + MenuCerámico.espesor4 + "\n");
-        textS.append("Contenido \t: " + MenuCerámico.contenido4 + "\n");
+        imprimir(MenuCerámico.modelo0 , MenuCerámico.precio0, MenuCerámico.ancho0, MenuCerámico.largo0, MenuCerámico.espesor0, MenuCerámico.contenido0);
+        imprimir(MenuCerámico.modelo1 , MenuCerámico.precio1, MenuCerámico.ancho1, MenuCerámico.largo1, MenuCerámico.espesor1, MenuCerámico.contenido1);
+        imprimir(MenuCerámico.modelo2 , MenuCerámico.precio2, MenuCerámico.ancho2, MenuCerámico.largo2, MenuCerámico.espesor2, MenuCerámico.contenido2);
+        imprimir(MenuCerámico.modelo3 , MenuCerámico.precio3, MenuCerámico.ancho3, MenuCerámico.largo3, MenuCerámico.espesor3, MenuCerámico.contenido3);
+        imprimir(MenuCerámico.modelo4 , MenuCerámico.precio4, MenuCerámico.ancho4, MenuCerámico.largo4, MenuCerámico.espesor4, MenuCerámico.contenido4);
 	}
 	protected void actionPerformedBtnCerrar(ActionEvent e) {
 		dispose();

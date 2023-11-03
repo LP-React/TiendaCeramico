@@ -1,0 +1,300 @@
+package cibertec;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import cibertec.MenuCerámico;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JOptionPane;
+
+public class Vender extends JDialog implements ActionListener {
+
+	int ventasRealizadas = 0;
+
+	private final JPanel contentPanel = new JPanel();
+	private JLabel lblModelo;
+	private JLabel lblPrecio;
+	private JLabel lblCantidad;
+	private JTextField textFPrecio;
+	private JComboBox cboModelo;
+	private JTextField textFCantidad;
+	private JButton btnVender;
+	private JButton btnCerrar;
+	private JScrollPane scrollPane;
+	private JTextArea textA;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			Vender dialog = new Vender();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public Vender() {
+		setBounds(100, 100, 450, 322);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+
+		lblModelo = new JLabel("Modelo");
+		lblModelo.setBounds(21, 23, 46, 14);
+		contentPanel.add(lblModelo);
+
+		lblPrecio = new JLabel("Precio (S/)");
+		lblPrecio.setBounds(21, 56, 69, 14);
+		contentPanel.add(lblPrecio);
+
+		lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setBounds(21, 89, 69, 14);
+		contentPanel.add(lblCantidad);
+
+		textFPrecio = new JTextField();
+		textFPrecio.setEditable(false);
+		textFPrecio.setBounds(100, 53, 176, 20);
+		contentPanel.add(textFPrecio);
+		textFPrecio.setColumns(10);
+
+		cboModelo = new JComboBox();
+		cboModelo.addActionListener(this);
+		cboModelo.setModel(new DefaultComboBoxModel(
+				new String[] { "Cinza Plus", "Luxury", "Austria", "Yungay Mix", "Thal\u00EDa" }));
+		cboModelo.setBounds(100, 19, 176, 22);
+		contentPanel.add(cboModelo);
+
+		textFCantidad = new JTextField();
+		textFCantidad.setBounds(100, 86, 176, 20);
+		contentPanel.add(textFCantidad);
+		textFCantidad.setColumns(10);
+
+		btnVender = new JButton("Vender");
+		btnVender.addActionListener(this);
+		btnVender.setBounds(323, 19, 89, 23);
+		contentPanel.add(btnVender);
+
+		btnCerrar = new JButton("Cerrar");
+		btnCerrar.setBounds(323, 52, 89, 23);
+		contentPanel.add(btnCerrar);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 114, 414, 158);
+		contentPanel.add(scrollPane);
+
+		textA = new JTextArea();
+		scrollPane.setViewportView(textA);
+
+		textFPrecio.setText(MenuCerámico.precio0 + "");
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == cboModelo) {
+			actionPerformedCboModelo(e);
+		}
+		if (e.getSource() == btnVender) {
+			actionPerformedBtnVender(e);
+		}
+	}
+
+//================================================================
+
+	double precioProducto = 0, impCompra = 0, impDescuento = 0, DatoSeleccionado = 0, impPagar = 0, CuotaDiaria = 0,
+			dineroAcumulado = 0, PorcentajeDiario = 0;;
+	int cantidad;
+	int obsequio = 0;
+
+	protected void actionPerformedCboModelo(ActionEvent e) {
+		switch (cboModelo.getSelectedIndex()) {
+		case 0:
+			textFPrecio.setText(MenuCerámico.precio0 + "");
+			precioProducto = MenuCerámico.precio0;
+			break;
+		case 1:
+			textFPrecio.setText(MenuCerámico.precio1 + "");
+			precioProducto = MenuCerámico.precio1;
+			break;
+		case 2:
+			textFPrecio.setText(MenuCerámico.precio2 + "");
+			precioProducto = MenuCerámico.precio2;
+			break;
+		case 3:
+			textFPrecio.setText(MenuCerámico.precio3 + "");
+			precioProducto = MenuCerámico.precio3;
+			break;
+		default:
+			textFPrecio.setText(MenuCerámico.precio4 + "");
+			precioProducto = MenuCerámico.precio4;
+			break;
+		}
+	}
+
+	void leerCantidad() {
+		cantidad = Integer.parseInt(textFCantidad.getText());
+	}
+	
+	public void validarCantidad(JTextField textCantidad) {
+		try {
+			int cantidad = Integer.parseInt(textCantidad.getText());
+		} catch (NumberFormatException e) {
+			textA.setText("Debes introducir un número entero");
+			return;
+		}
+		if (cantidad < 1) {
+			textA.setText("Debes introducir un número mayor a 0");
+			return;
+		}
+		return;
+	}
+
+	double calcularImpCompra() {
+		impCompra = precioProducto * cantidad;
+		return impCompra;
+	}
+
+	double calcularImporteDescuento() {
+		if (cantidad <= 5) {
+			impDescuento = (MenuCerámico.porcentaje1 * impCompra) / 100;
+		} else if (cantidad <= 10) {
+			impDescuento = (MenuCerámico.porcentaje2 * impCompra) / 100;
+		} else if (cantidad <= 15) {
+			impDescuento = (MenuCerámico.porcentaje3 * impCompra) / 100;
+		} else {
+			impDescuento = (MenuCerámico.porcentaje4 * impCompra) / 100;
+		}
+		return impDescuento;
+	}
+
+	double calcularImportePagar() {
+		impPagar = impCompra - impDescuento;
+		return impPagar;
+	}
+
+	int calcularObs() {
+		if (cantidad <= 5) {
+			obsequio = (MenuCerámico.obsequioCantidad1 * cantidad);
+		} else if (cantidad <= 10) {
+			obsequio = (MenuCerámico.obsequioCantidad2 * cantidad);
+		} else {
+			obsequio = (MenuCerámico.obsequioCantidad3 * cantidad);
+		}
+
+		return obsequio;
+	}
+
+	void imprimirDatos(double precio, int cantidad, double importeCompra, double importeDescuento, double importePagar,
+			String tipoObsequio, int cantidadObsequio) {
+		textA.setText("BOLETA DE VENTA" + "\n\n");
+		textA.append("Modelo\t\t: " + cboModelo.getSelectedItem());
+		textA.append("\nPrecio\t\t: S/." + precio);
+		textA.append("\nCantidad adquirida\t: " + cantidad);
+		textA.append("\nImporte de Compra\t: S/." + String.format("%.2f", importeCompra));
+		textA.append("\nImporte de Descuento\t: S/." + String.format("%.2f", importeDescuento));
+		textA.append("\nImporte a Pagar\t: S/" + String.format("%.2f", importePagar));
+		textA.append("\nTipo de Obsequio\t: " + tipoObsequio);
+		textA.append("\nUnidades Obsequiadas\t: " + cantidadObsequio);
+	}
+
+	// ===================================
+
+	protected void actionPerformedBtnVender(ActionEvent e) {
+		
+		actionPerformedCboModelo(null);
+		leerCantidad();
+		validarCantidad(textFCantidad);
+		calcularImpCompra();
+		calcularImporteDescuento();
+		calcularImportePagar();
+		calcularObs();
+		imprimirDatos(precioProducto, cantidad, impCompra, impDescuento, impPagar, MenuCerámico.tipoObsequio, obsequio);
+
+		// Guardando datos para GenerarReportes
+		switch (cboModelo.getSelectedIndex()) {
+		case 0:
+			MenuCerámico.CajasVendidos0 += Integer.parseInt(textFCantidad.getText());
+			MenuCerámico.CantidadVentas0++;
+			MenuCerámico.TotalImporteVendido0 += impPagar;
+			MenuCerámico.SaveCuotaDiaria0 = (MenuCerámico.TotalImporteVendido0 / MenuCerámico.cuotaDiaria) * 100;
+			break;
+		case 1:
+			MenuCerámico.CajasVendidos1 += Integer.parseInt(textFCantidad.getText());
+			MenuCerámico.CantidadVentas1++;
+			MenuCerámico.TotalImporteVendido1 += impPagar;
+			MenuCerámico.SaveCuotaDiaria1 = (MenuCerámico.TotalImporteVendido1 / MenuCerámico.cuotaDiaria) * 100;
+			break;
+		case 2:
+			MenuCerámico.CajasVendidos2 += Integer.parseInt(textFCantidad.getText());
+			MenuCerámico.CantidadVentas2++;
+			MenuCerámico.TotalImporteVendido2 += impPagar;
+			MenuCerámico.SaveCuotaDiaria2 = (MenuCerámico.TotalImporteVendido2 / MenuCerámico.cuotaDiaria) * 100;
+			break;
+		case 3:
+			MenuCerámico.CajasVendidos3 += Integer.parseInt(textFCantidad.getText());
+			MenuCerámico.CantidadVentas3++;
+			MenuCerámico.TotalImporteVendido3 += impPagar;
+			MenuCerámico.SaveCuotaDiaria3 = (MenuCerámico.TotalImporteVendido3 / MenuCerámico.cuotaDiaria) * 100;
+			break;
+		default:
+			MenuCerámico.CajasVendidos4 += Integer.parseInt(textFCantidad.getText());
+			MenuCerámico.CantidadVentas4++;
+			MenuCerámico.TotalImporteVendido4 += impPagar;
+			MenuCerámico.SaveCuotaDiaria4 = (MenuCerámico.TotalImporteVendido4 / MenuCerámico.cuotaDiaria) * 100;
+			break;
+
+		}
+
+		ventasRealizadas++; // suma cada vez que recorre
+
+		dineroAcumulado += impPagar; // Guarda el Dato en GeneralAcumulado
+
+		// Acumula por cada vez que se le da al botón vender / y saca el valor del
+		// menuCerámico Principal para dividir y luego multiplicar por 100
+		PorcentajeDiario = (dineroAcumulado / MenuCerámico.cuotaDiaria) * 100;
+
+		// VentasRealizadas es multiplo de 5,10,15,20,25..? sí es cierto el resultado
+		// sería 0.
+		if (ventasRealizadas % 5 == 0) {
+			JOptionPane.showMessageDialog(null,
+					"Venta Nro. " + ventasRealizadas + "\nImporte total general acumulado: S/. "
+							+ String.format("%.2f", dineroAcumulado) + "\nPorcentaje de la cuota diaria: "
+							+ String.format("%.2f", PorcentajeDiario) + "%",
+					"Avance de Ventas", JOptionPane.WARNING_MESSAGE);
+		}
+
+		cboModelo.setSelectedIndex(0); // reseeleccionamos al primero del cbo
+		textFCantidad.setText(""); // Formateamos la entrada
+	}
+
+	public boolean IsValidNum(String text) {
+		// intenta realizar la funcionalidad del código dentro de Try
+		try {
+			Integer.parseInt(text);
+			return true;
+		}
+		// En caso que suceda algún tipo de error, devolverá false.
+		catch (NumberFormatException e) {
+			return false;
+		}
+	}
+}

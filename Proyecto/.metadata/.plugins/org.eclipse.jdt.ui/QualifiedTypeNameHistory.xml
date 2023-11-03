@@ -3,4 +3,9 @@
     <fullyQualifiedTypeName name="java.lang.Math"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.security.MessageDigest"/>
+    <fullyQualifiedTypeName name="java.awt.Menu"/>
+    <fullyQualifiedTypeName name="java.awt.font.TextLayout"/>
+    <fullyQualifiedTypeName name="cibertec.ConsultarCerámico"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="cibertec.MenuCerámico"/>
 </qualifiedTypeNameHistroy>

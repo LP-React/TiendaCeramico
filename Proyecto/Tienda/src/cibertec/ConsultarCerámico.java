@@ -141,45 +141,32 @@ public class ConsultarCerámico extends JDialog implements ActionListener {
 	}
 	
 	
+	public void mostrarDatos(double precio, double ancho, double largo, double espesor, int contenido) {
+		textFPrecio.setText(precio + "");
+		textFAncho.setText(ancho + "");
+		textFLargo.setText(largo + "");
+		textFEspesor.setText(espesor + "");
+		textFContenido.setText(contenido + "");	
+	}
+	
 	protected void actionPerformedCboModelo(ActionEvent e) {
 		switch(cboModelo.getSelectedIndex()) {
 			case 0: 
-				textFPrecio.setText(MenuCerámico.precio0 + "");
-				textFAncho.setText(MenuCerámico.ancho0 + "");
-				textFLargo.setText(MenuCerámico.largo0 + "");
-				textFEspesor.setText(MenuCerámico.espesor0 + "");
-				textFContenido.setText(MenuCerámico.contenido0 + "");
+				mostrarDatos(MenuCerámico.precio0, MenuCerámico.ancho0, MenuCerámico.largo0, MenuCerámico.espesor0, MenuCerámico.contenido0);
 				break;
 	
 			case 1:
-				textFPrecio.setText(MenuCerámico.precio1 + "");
-				textFAncho.setText(MenuCerámico.ancho1 + "");
-				textFLargo.setText(MenuCerámico.largo1 + "");
-				textFEspesor.setText(MenuCerámico.espesor1 + "");
-				textFContenido.setText(MenuCerámico.contenido1 + "");
+				mostrarDatos(MenuCerámico.precio1, MenuCerámico.ancho1, MenuCerámico.largo1, MenuCerámico.espesor1, MenuCerámico.contenido1);
 				break;
 			case 2:
-				textFPrecio.setText(MenuCerámico.precio2 + "");
-				textFAncho.setText(MenuCerámico.ancho2 + "");
-				textFLargo.setText(MenuCerámico.largo2 + "");
-				textFEspesor.setText(MenuCerámico.espesor2 + "");
-				textFContenido.setText(MenuCerámico.contenido2 + "");
+				mostrarDatos(MenuCerámico.precio2, MenuCerámico.ancho2, MenuCerámico.largo2, MenuCerámico.espesor2, MenuCerámico.contenido2);
 				break;
 			case 3:
-				textFPrecio.setText(MenuCerámico.precio3 + "");
-				textFAncho.setText(MenuCerámico.ancho3 + "");
-				textFLargo.setText(MenuCerámico.largo3 + "");
-				textFEspesor.setText(MenuCerámico.espesor3 + "");
-				textFContenido.setText(MenuCerámico.contenido3 + "");
+				mostrarDatos(MenuCerámico.precio3, MenuCerámico.ancho3, MenuCerámico.largo3, MenuCerámico.espesor3, MenuCerámico.contenido3);
 				break;
 			default:
-				textFPrecio.setText(MenuCerámico.precio4 + "");
-				textFAncho.setText(MenuCerámico.ancho4 + "");
-				textFLargo.setText(MenuCerámico.largo4 + "");
-				textFEspesor.setText(MenuCerámico.espesor4 + "");
-				textFContenido.setText(MenuCerámico.contenido4 + "");
+				mostrarDatos(MenuCerámico.precio4, MenuCerámico.ancho4, MenuCerámico.largo4, MenuCerámico.espesor4, MenuCerámico.contenido4);
 				break;
-		
 		}
 	}
 	
